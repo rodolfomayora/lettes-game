@@ -1,22 +1,12 @@
 import React from 'react';
 
-import { Board } from './components';
-import styled from 'styled-components';
+import BoardGame from './views/BoardGame';
+import { Layout } from './components';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
-
-function App() {
+export default function App() {
   return (
-    <Container>
-      <Board />
-    </Container>
+    <Layout>
+      <BoardGame />
+    </Layout>
   );
 }
-
-export default App;
