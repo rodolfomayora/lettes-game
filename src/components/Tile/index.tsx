@@ -6,7 +6,9 @@ import {
   TileStyled,
 } from './styles';
 
-function Tile ({ isSelected, letter, handleTile }: TileProps) {
+export default function Tile (props: TileProps) {
+
+  const { isSelected, letter, handleTile } = props;
 
   const isAlreadySelected: boolean = !isSelected;
 
@@ -22,5 +24,3 @@ function Tile ({ isSelected, letter, handleTile }: TileProps) {
     </TileStyled>
   );
 }
-
-export default Tile;
