@@ -1,66 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import data from '../../data/test-board-1.json';
 import Tile from '../Tile';
+import { BoardProps } from './types';
+import {
+  BoardRow,
+  BoardStyled,
+} from './styles';
 
-type Matriz = Array<Array<string>>
+export default function Board(props: BoardProps) {
 
-function Board() {
+  const { letterMatriz, handleSelectedTile, handleTile } = props
 
-  const { board: letters } = data;
-
-  const mapArrayToMatiz = (array: Array<string>, columns: number): Matriz => {
-    return array.reduce((acc: Matriz, crr: string, index:number) => {
-      if (index % columns === 0) acc.push([crr]);
-      else acc[acc.length - 1].push(crr);
-      return acc
-    }, []);
-  }
-
-  const boardMatriz: Matriz = mapArrayToMatiz(letters, 4);
-
-  const [selectedLetters, setSelectedLetters] = useState<Array<string>>([]);
-
-  const isEmpty: boolean = !selectedLetters.length;
-
-  const resetLelectedLetters = () => setSelectedLetters([]);
-
-  const handleTile = (currentLetter: string) => ():void => {
-    setSelectedLetters(letters => letters.concat(currentLetter));
+  const generateTilesPerRow = (rowIndex: number) => {
+    return (letter: string, letterIndex: number) => {
+      return (
+        <Tile key={`${rowIndex}${letterIndex}`}
+          letter={letter}
+          isSelected={handleSelectedTile(letter)}
+          handleTile={handleTile(letter)}/>
+      );
+    }
   }
 
   return (
-    <>
-      <button
-        disabled={isEmpty}
-        onClick={resetLelectedLetters}>
-        Reset
-      </button>
-
-      <hr />
-
-      <table>
-        <tbody>
-          {boardMatriz.map((row: Array<string>, rowIndex) => (
-            <tr key={rowIndex.toString()}>
-              {row.map((letter: string, letterIndex) => (
-                <td key={`${rowIndex}${letterIndex}`}>
-                  <Tile
-                    letter={letter}
-                    isSelected={selectedLetters.includes(letter)}
-                    handleTile={handleTile(letter)}/>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <hr />
-
-      <div>{`[${selectedLetters.join(' ')}]`}</div>
-    </>
+    <BoardStyled>
+      {letterMatriz.map((row: Array<string>, rowIndex: number) => (
+        <BoardRow key={rowIndex.toString()}>
+          {row.map(generateTilesPerRow(rowIndex))}
+        </BoardRow>
+      ))}
+    </BoardStyled>
   );
 }
-
-export default Board;
