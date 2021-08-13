@@ -1,7 +1,8 @@
 /**
  * Focus Development: Mobible First
  */
-
-export default {
+const breakpoints = {
   large: '992px',
 }
+
+export default breakpoints;
