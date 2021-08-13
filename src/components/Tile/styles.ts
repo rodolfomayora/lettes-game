@@ -3,16 +3,13 @@ import styled, { css } from 'styled-components';
 import { colors, mixins } from '../../assets/styles/config';
 import { TileStyledProps } from './types';
 
-const externalBorderRadius: number = 9;
-const innerBorderRadius: number = externalBorderRadius - 2;
-
 export const TileStyled = styled.button<TileStyledProps>`
 
   width: 62px;
   height: 62px;
   padding: 2px;
   border: none;
-  border-radius: ${externalBorderRadius}px;
+  border-radius: 9px;
   outline: none;
 
   background-image: linear-gradient(
@@ -37,13 +34,6 @@ export const TileStyled = styled.button<TileStyledProps>`
     cursor: not-allowed;
 
     &:active { transform: none; }
-
-    ${mixins.large(css`
-      background-image: linear-gradient(
-        180deg,
-        ${colors.red1},
-        ${colors.red2});
-    `)}
   `}
 `;
 
@@ -53,7 +43,7 @@ export const TileLetter = styled.span<TileStyledProps>`
   align-items: center;
   
   height: 100%;
-  border-radius: ${innerBorderRadius}px;
+  border-radius: 6px;
 
   font-size: 34px;
   font-weight: 700;
@@ -65,6 +55,10 @@ export const TileLetter = styled.span<TileStyledProps>`
     180deg,
     ${colors.orange1},
     ${colors.orange2});
+  
+  ${mixins.large(css`
+    border-radius: 6px;
+  `)}
   
   ${({ isSelected }) => isSelected && css`
     background-image: none;
