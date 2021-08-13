@@ -1,10 +1,10 @@
 import React from 'react';
 
-type TileProps = {
-  isSelected: boolean,
-  letter: string,
-  handleTile: () => void,
-}
+import { TileProps } from './types';
+import {
+  TileLetter,
+  TileStyled,
+} from './styles';
 
 function Tile ({ isSelected, letter, handleTile }: TileProps) {
 
@@ -13,10 +13,13 @@ function Tile ({ isSelected, letter, handleTile }: TileProps) {
   const handleClick = () => isAlreadySelected && handleTile();
 
   return (
-    <button onClick={handleClick}>
-      {letter}
-      {isSelected && <span>*</span>}
-    </button>
+    <TileStyled
+      isSelected={isSelected}
+      onClick={handleClick}>
+      <TileLetter isSelected={isSelected}>
+        {letter}
+      </TileLetter>
+    </TileStyled>
   );
 }
 
