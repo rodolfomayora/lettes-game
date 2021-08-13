@@ -21,6 +21,8 @@ function Board() {
 
   const [selectedLetters, setSelectedLetters] = useState<Array<string>>([]);
 
+  const isEmpty: boolean = !selectedLetters.length;
+
   const resetLelectedLetters = () => setSelectedLetters([]);
 
   const handleTile = (currentLetter: string) => ():void => {
@@ -29,7 +31,11 @@ function Board() {
 
   return (
     <>
-      <button onClick={resetLelectedLetters}>Reset</button>
+      <button
+        disabled={isEmpty}
+        onClick={resetLelectedLetters}>
+        Reset
+      </button>
 
       <hr />
 
