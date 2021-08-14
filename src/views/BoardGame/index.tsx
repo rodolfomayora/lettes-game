@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-// import data from '../../data/test-board-1.json';
+// import data from '../../data/test-board-2.json';
 import { Matriz } from '../../models';
 import {
   generateRandomLetters,
@@ -20,19 +20,19 @@ import {
 
 export default function BoardGame () {
 
-  // const { board: randomLettets } = data;
+  // const { board } = data; // test-board-2.json
   const [letterMatriz, setLetterMatriz] = useState<Matriz>([]);
   useEffect(() => {
     const letterQuantity: number = 16;
     const matrizColumns: number = 4;
     const randomLettets = generateRandomLetters(letterQuantity);
     const newLetterMatriz = mapArrayToMatriz(randomLettets, matrizColumns);
+    // const newLetterMatriz = mapArrayToMatriz(board, matrizColumns);
     setLetterMatriz(newLetterMatriz);
   },
-  [])
+  []);
 
   const [selectedLettersId, setSelectedLetters] = useState<Array<string>>([]);
-
   const isSelectedLettersEmpty: boolean = !selectedLettersId.length;
 
   const handleReset = () => setSelectedLetters([]);
@@ -45,6 +45,8 @@ export default function BoardGame () {
     return currentSelectedLetters.includes(letter)
   }
 
+  const [isValidWord, setIsValidWord] = useState<boolean>(false);
+
   return (
     <BoardGameStyled>
       <ButtonWrapper>
@@ -56,14 +58,17 @@ export default function BoardGame () {
       <BoardWrapper>
         <Board
           letterMatriz={letterMatriz}
+          isValidWord={isValidWord}
           handleSelectedTile={handleSelectedTile(selectedLettersId)}
           handleTile={handleTile} />
       </BoardWrapper>
 
       <LabelWrapper>
         <WordLabel
+          isValidWord={isValidWord}
           letterMatriz={letterMatriz}
-          selectedLetters={selectedLettersId} />
+          selectedLettersId={selectedLettersId}
+          handleValidWord={setIsValidWord} />
       </LabelWrapper>
     </BoardGameStyled>
   );

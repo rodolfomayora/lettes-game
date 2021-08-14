@@ -9,7 +9,7 @@ import {
 
 export default function Board(props: BoardProps) {
 
-  const { letterMatriz, handleSelectedTile, handleTile } = props
+  const { letterMatriz, isValidWord, handleSelectedTile, handleTile } = props
 
   const generateTilesPerRow = (rowIndex: number) => {
     return (letter: string, letterIndex: number) => {
@@ -18,6 +18,7 @@ export default function Board(props: BoardProps) {
         <Tile key={letterId}
           letter={letter}
           isSelected={handleSelectedTile(letterId)}
+          isValidWord={isValidWord}
           handleTile={handleTile(letterId)} />
       );
     }

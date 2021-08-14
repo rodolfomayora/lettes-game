@@ -1,6 +1,11 @@
 import { Matriz } from '../../models';
 
-export type WordLabelProps = {
+export type StyledProps = {
+  isValidWord?: boolean,
+}
+
+export type WordLabelProps = StyledProps & {
   letterMatriz: Matriz,
-  selectedLetters: Array<string>,
+  selectedLettersId: Array<string>,
+  handleValidWord: (isValid: boolean) => void,
 }

@@ -1,11 +1,21 @@
-import React  from 'react';
+import React, { useEffect } from 'react';
 
+import dictionary from '../../data/dictionary.json';
 import { WordLabelProps } from './types';
-import { WordLabelStyled } from './styles';
+import { 
+  FormedWord,
+  ValidationLabel,
+  WordLabelStyled,
+} from './styles';
 
 export default function WordLabel (props: WordLabelProps) {
 
-  const { letterMatriz, selectedLetters } = props;
+  const {
+    isValidWord,
+    letterMatriz,
+    selectedLettersId,
+    handleValidWord,
+  } = props;
 
   const reducerToFormedWord = (acc: string, crr: string): string => {
     const matrixCoordenates: Array<string> = crr.split('');
@@ -14,7 +24,31 @@ export default function WordLabel (props: WordLabelProps) {
     return acc.concat(selectedLetter);
   }
 
-  const formedWord = selectedLetters.reduce(reducerToFormedWord,'')
+  const formedWord = selectedLettersId.reduce(reducerToFormedWord,'');
+  const isFormedWordEmpty = !!formedWord;
+  const { words: dictionaryWords } = dictionary;
 
-  return <WordLabelStyled>{formedWord}</WordLabelStyled>;
+  useEffect(() => {
+    const formatedWord: string = formedWord.toLowerCase();
+    const findCoincidences = (word: string): boolean => {
+      return word.toLowerCase() === formatedWord;
+    }
+    const isValidWord: boolean = dictionaryWords.some(findCoincidences);
+    handleValidWord(isValidWord);
+  },
+  [formedWord, dictionaryWords, handleValidWord]);
+
+  return (
+    <WordLabelStyled>
+      <FormedWord isValidWord={isValidWord}>
+        {formedWord}
+      </FormedWord>
+
+      {isFormedWordEmpty && (
+        <ValidationLabel isValidWord={isValidWord}>
+          {isValidWord ? 'valid' : 'invalid'}
+        </ValidationLabel>
+      )}
+    </WordLabelStyled>
+  );
 }
