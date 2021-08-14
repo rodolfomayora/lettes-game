@@ -1,0 +1,1 @@
+export type Matriz = Array<Array<string>>
