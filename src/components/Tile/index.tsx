@@ -8,7 +8,7 @@ import {
 
 export default function Tile (props: TileProps) {
 
-  const { isSelected, letter, handleTile } = props;
+  const { isSelected, letter, isValidWord, handleTile } = props;
 
   const isAlreadySelected: boolean = !isSelected;
 
@@ -17,6 +17,7 @@ export default function Tile (props: TileProps) {
   return (
     <TileStyled
       isSelected={isSelected}
+      isValidWord={isSelected && isValidWord}
       onClick={handleClick}>
       <TileLetter isSelected={isSelected}>
         {letter}

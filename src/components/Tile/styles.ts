@@ -29,11 +29,18 @@ export const TileStyled = styled.button<TileStyledProps>`
   ${({ isSelected }) => isSelected && css`
     background-image: linear-gradient(
       180deg,
-      ${colors.green1},
-      ${colors.green2});
+      ${colors.red1},
+      ${colors.red2});
     cursor: not-allowed;
 
     &:active { transform: none; }
+  `}
+
+  ${({ isValidWord }) => isValidWord && css`
+    background-image: linear-gradient(
+      180deg,
+      ${colors.green1},
+      ${colors.green2});
   `}
 `;
 

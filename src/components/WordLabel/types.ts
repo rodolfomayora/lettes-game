@@ -1,6 +1,7 @@
-import { Matriz } from '../../models';
+export type StyledProps = {
+  isValidWord?: boolean,
+}
 
-export type WordLabelProps = {
-  letterMatriz: Matriz,
-  selectedLetters: Array<string>,
+export type WordLabelProps = StyledProps & {
+  formedWord: string,
 }
