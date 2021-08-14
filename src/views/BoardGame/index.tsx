@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-
-import data from '../../data/test-board-1.json';
+// import data from '../../data/test-board-1.json';
 import { Matriz } from '../../models';
-import { mapArrayToMatriz } from '../../utils';
+import {
+  generateRandomLetters,
+  mapArrayToMatriz,
+ } from '../../utils';
 import {
   Board,
   WordLabel,
@@ -18,19 +20,22 @@ import {
 
 export default function BoardGame () {
 
-  const { board: letters } = data;
+  // const { board: randomLettets } = data;
+  const [letterMatriz, setLetterMatriz] = useState<Matriz>([]);
+  useEffect(() => {
+    const letterQuantity: number = 16;
+    const matrizColumns: number = 4;
+    const randomLettets = generateRandomLetters(letterQuantity);
+    const newLetterMatriz = mapArrayToMatriz(randomLettets, matrizColumns);
+    setLetterMatriz(newLetterMatriz);
+  },
+  [])
 
-  const matrizColumns: number = 4;
+  const [selectedLettersId, setSelectedLetters] = useState<Array<string>>([]);
 
-  const letterMatriz: Matriz = mapArrayToMatriz(letters, matrizColumns);
+  const isSelectedLettersEmpty: boolean = !selectedLettersId.length;
 
-  const initialState: Array<string> = [];
-
-  const [selectedLetters, setSelectedLetters] = useState<Array<string>>(initialState);
-
-  const isSelectedLettersEmpty: boolean = !selectedLetters.length;
-
-  const handleReset = () => setSelectedLetters(initialState);
+  const handleReset = () => setSelectedLetters([]);
 
   const handleTile = (currentLetter: string) => () => {
     setSelectedLetters(letters => letters.concat(currentLetter));
@@ -51,12 +56,14 @@ export default function BoardGame () {
       <BoardWrapper>
         <Board
           letterMatriz={letterMatriz}
-          handleSelectedTile={handleSelectedTile(selectedLetters)}
+          handleSelectedTile={handleSelectedTile(selectedLettersId)}
           handleTile={handleTile} />
       </BoardWrapper>
 
       <LabelWrapper>
-        <WordLabel selectedLetters={selectedLetters} />
+        <WordLabel
+          letterMatriz={letterMatriz}
+          selectedLetters={selectedLettersId} />
       </LabelWrapper>
     </BoardGameStyled>
   );

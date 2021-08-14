@@ -13,11 +13,12 @@ export default function Board(props: BoardProps) {
 
   const generateTilesPerRow = (rowIndex: number) => {
     return (letter: string, letterIndex: number) => {
+      const letterId: string = `${rowIndex}${letterIndex}`;
       return (
-        <Tile key={`${rowIndex}${letterIndex}`}
+        <Tile key={letterId}
           letter={letter}
-          isSelected={handleSelectedTile(letter)}
-          handleTile={handleTile(letter)}/>
+          isSelected={handleSelectedTile(letterId)}
+          handleTile={handleTile(letterId)} />
       );
     }
   }

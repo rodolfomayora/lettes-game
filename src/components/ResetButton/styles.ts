@@ -10,7 +10,7 @@ export const ResetButtonStyled = styled.button`
   border: none;
 
   font-size: 17px;
-  letter-spacing: -0.7px;
+  letter-spacing: -0.5px;
   color: ${colors.gray1};
 
   background-color: ${colors.transparent};
